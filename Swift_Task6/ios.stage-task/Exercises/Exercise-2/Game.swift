@@ -16,8 +16,23 @@ struct Game: GameCompatible {
 }
 
 extension Game {
-
+    
     func defineFirstAttackingPlayer(players: [Player]) -> Player? {
-        nil
+        var firstPlayer = Player()
+        var min: Value = .ace
+        for player in players {
+            let trumpCards = player.hand?.filter{$0.isTrump == true}
+            if let trumpCards = trumpCards {
+                for card in trumpCards {
+                    if card.value.rawValue <= min.rawValue {
+                        min = card.value
+                        firstPlayer = player
+                    }
+                }
+            }
+        }
+        return firstPlayer
     }
+    
 }
+
